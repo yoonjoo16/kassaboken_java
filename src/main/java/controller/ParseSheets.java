@@ -1,3 +1,5 @@
+package controller;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -68,9 +70,9 @@ public class ParseSheets {
                 .build();
     }
 
-    private static void parseFile() throws IOException, GeneralSecurityException{
+    protected static void parseFile() throws IOException, GeneralSecurityException{
         sheets = getSheets();
-        final String range = "jan!A2:E";
+        final String range = "jan";
         ValueRange response = sheets.spreadsheets().values()
                 .get(SPREADSHEET_ID, range)
                 .execute();
@@ -86,7 +88,7 @@ public class ParseSheets {
         }
     }
 
-    private static void appendFile() throws IOException, GeneralSecurityException{
+    protected static void appendFile() throws IOException, GeneralSecurityException{
         sheets = getSheets();
         ValueRange appendBody = new ValueRange()
                 .setValues(Arrays.asList(
@@ -101,12 +103,5 @@ public class ParseSheets {
                 .execute();
     }
 
-    /**
-     * Prints the names and majors of students in a sample spreadsheet:
-     * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-     */
-    public static void main(String... args) throws IOException, GeneralSecurityException {
-       parseFile();
-       appendFile();
-    }
+
 }
