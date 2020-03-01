@@ -5,8 +5,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 @SuppressWarnings("checkstyle:Indentation")
@@ -16,29 +14,32 @@ public class Register extends Application {
     private RadioButton erik, yoonjoo;
     private TextField date = new TextField();
     private TextField place = new TextField();
-    private Button regButton = new Button("Regster");
+    private TextField belopp = new TextField();
+    private Button regButton = new Button("Register");
 
     @Override
     public void start(Stage stage) {
         stage.setTitle("Registrering");
-        Scene scene = new Scene(new Group(), 550, 200);
+        Scene scene = new Scene(new Group(), 550, 300);
         makeSelectBoxMonthAndYear();
         makeRadioButtons();
         GridPane grid = new GridPane();
         grid.setVgap(4);
         grid.setHgap(10);
         grid.setPadding(new Insets(5, 5, 5, 5));
-        grid.add(new Label("Month: "), 0, 0);
+        grid.add(new Label("Månad: "), 0, 0);
         grid.add(selectMonth, 1, 0);
-        grid.add(new Label("Year: "), 2, 0);
+        grid.add(new Label("År: "), 2, 0);
         grid.add(selectYear, 3, 0);
         grid.add(new Label("Vem har betalat? "), 0, 1);
         grid.add(erik, 1,2);
         grid.add(yoonjoo,2,2);
-        grid.add(new Label("Datum (YYMMDD)"), 0, 3);
+        grid.add(new Label("Datum (ÅÅMMDD)"), 0, 3);
         grid.add(date,1,3);
         grid.add(new Label("Plats"), 0, 4);
         grid.add(place,1,4);
+        grid.add(new Label("Belopp"), 0, 5);
+        grid.add(belopp,1,5);
         grid.add(regButton,1,7);
         Group root = (Group)scene.getRoot();
         root.getChildren().add(grid);
@@ -62,7 +63,7 @@ public class Register extends Application {
                 "november",
                 "december"
         );
-        selectMonth.setValue("januari");
+        selectMonth.setValue("mars");
 
         selectYear = new ComboBox();
         selectYear.getItems().addAll(
