@@ -30,6 +30,7 @@ public class ParseSheets {
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
     private static final String SPREADSHEET_ID = "1QXKm1Owr4q3sVJDp7gMPETepOwVVL7TwGkBPkE215BM";
     private static Sheets sheets;
+    private static String range;
 
     /**
      * Global instance of the scopes required by this quickstart.
@@ -70,9 +71,10 @@ public class ParseSheets {
                 .build();
     }
 
+
     protected static void parseFile() throws IOException, GeneralSecurityException{
         sheets = getSheets();
-        final String range = "jan";
+        range = "jan";
         ValueRange response = sheets.spreadsheets().values()
                 .get(SPREADSHEET_ID, range)
                 .execute();

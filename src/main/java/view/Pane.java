@@ -5,6 +5,10 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.text.ParseException;
+
 public class Pane {
     private GridPane grid;
     private ComboBox selectMonth, selectYear;
@@ -146,7 +150,11 @@ public class Pane {
     private void makeRegisterButton() {
         regButton = new Button("Register");
         regButton.setOnAction(event -> {
-            regController.getResultFromView(getResult());
+            try {
+                regController.getResultFromView(getResult());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         });
     }
 
