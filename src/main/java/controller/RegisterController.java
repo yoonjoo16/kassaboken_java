@@ -26,8 +26,8 @@ public class RegisterController {
         belopp = result[5];
         s = "; ";
         System.out.println(month + s + year +s + user + s + sdf.format(date) + s + place + s + belopp);
-        SheetParser.parseFile(result);
-        SheetParser.appendFile(result);
+        ParseSheets.parseFile(result);
+        ParseSheets.appendFile(result);
     }
 
 }

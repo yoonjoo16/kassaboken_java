@@ -36,7 +36,7 @@ public class SheetParser {
     private static String belopp;
     private static String[] resultFromView;
     private static Sheets sheets;
-    private static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
+    private static final List SCOPES = Arrays.asList(SheetsScopes.SPREADSHEETS);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
     public static void parse(String[] result) {

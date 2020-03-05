@@ -166,9 +166,9 @@ public class Pane {
         grid.setVgap(4);
         grid.setHgap(10);
         grid.setPadding(new Insets(5, 5, 5, 5));
-        grid.addRow(0, new Label("MÂnad: "), selectMonth, new Label("≈r: "), selectYear);
+        grid.addRow(0, new Label("M√•nad: "), selectMonth, new Label("√Ör: "), selectYear);
         grid.addRow(1, new Label("Vem har betalat? "), erik, yoonjoo);
-        grid.addRow(2, new Label("Datum (≈≈MMDD)"), date);
+        grid.addRow(2, new Label("Datum (YYMMDD)"), date);
         grid.addRow(3, lidl, ica, systemet);
         grid.addRow(4, pizza, pub,annat, place);
         grid.addRow(5, new Label("Belopp"), belopp);
@@ -196,7 +196,7 @@ public class Pane {
         if(!belopp.getText().trim().isEmpty()) {
             result[5] = belopp.getText();
         }else {
-            throw new NullPointerException("Skriv r‰tt belopp!");
+            throw new NullPointerException("Skriv r√§tt belopp!");
         }
         return result;
     }

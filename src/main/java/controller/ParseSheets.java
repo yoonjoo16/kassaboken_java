@@ -28,15 +28,20 @@ public class ParseSheets {
     private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
-    private static final String SPREADSHEET_ID = "1QXKm1Owr4q3sVJDp7gMPETepOwVVL7TwGkBPkE215BM";
+    private static String SPREADSHEET_ID = "1QXKm1Owr4q3sVJDp7gMPETepOwVVL7TwGkBPkE215BM";
     private static Sheets sheets;
-    private static String range;
+    private static String month;
+    private static String user;
+    private static String date;
+    private static String place;
+    private static String belopp;
+    private static String[] resultFromView;
 
     /**
      * Global instance of the scopes required by this quickstart.
      * If modifying these scopes, delete your previously saved tokens/ folder.
      */
-    private static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
+    private static final List SCOPES = Arrays.asList(SheetsScopes.SPREADSHEETS);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
     /**
@@ -71,12 +76,33 @@ public class ParseSheets {
                 .build();
     }
 
+    public static void parse(String[] result) {
+        resultFromView = result;
+        month = result[0];
+        SPREADSHEET_ID = chooseYear(result[1]);
+        user = result[2];
+        date = result[3];
+        place = result[4];
+        belopp = result[5];
+    }
 
-    protected static void parseFile() throws IOException, GeneralSecurityException{
+    private static String chooseYear(String s) {
+        switch (s) {
+            case "2020": return "1QXKm1Owr4q3sVJDp7gMPETepOwVVL7TwGkBPkE215BM";
+            case "2019": return "19gRMtfevqq6RTOnpFNjsa-b-JU6SQ4e0083sYSwf9aI";
+            case "2018": return "1KCW3T41h8bI2bjrc8K5D-izx65w31ujzAnN42HgAc6k";
+            case "2017": return "1zsYahagz95MG5m9SfvAmWWWLDD4pP4xWJC_ckPVQa3w";
+            case "2016": return "1RzPcE6fYP76f3dQwVRtsKS0nKoBshKo-kFp5gWPgt7E";
+            default:
+                throw new IllegalStateException("Unexpected value: " + s);
+        }
+    }
+
+    protected static void parseFile(String[] result) throws IOException, GeneralSecurityException{
         sheets = getSheets();
-        range = "jan";
+        parse(result);
         ValueRange response = sheets.spreadsheets().values()
-                .get(SPREADSHEET_ID, range)
+                .get(SPREADSHEET_ID, month)
                 .execute();
         List<List<Object>> values = response.getValues();
         if (values == null || values.isEmpty()) {
@@ -90,19 +116,24 @@ public class ParseSheets {
         }
     }
 
-    protected static void appendFile() throws IOException, GeneralSecurityException{
+    protected static void appendFile(String[] result) throws IOException, GeneralSecurityException{
         sheets = getSheets();
-        ValueRange appendBody = new ValueRange()
-                .setValues(Arrays.asList(
-                        Arrays.asList("This","was","added","from","code!")
-                ));
+        parse(result);
+        ValueRange appendBody = new ValueRange();
+        if(user.equals("Erik")) {
+            appendBody.setValues(Arrays.asList(Arrays.asList("this","is","from","the","code")));
+            //  appendBody.setValues(Arrays.asList(Arrays.asList(date,place,belopp,"0","")));
+        } else {
+            appendBody.setValues(Arrays.asList(Arrays.asList(date,place,"0",belopp,"")));
+        }
 
         AppendValuesResponse appendResult = sheets.spreadsheets().values()
-                .append(SPREADSHEET_ID, "jan",appendBody)
+                .append(SPREADSHEET_ID, month,appendBody)
                 .setValueInputOption("USER_ENTERED")
                 .setInsertDataOption("INSERT_ROWS")
                 .setIncludeValuesInResponse(true)
                 .execute();
+
     }
 
 
