@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class Pane {
     private GridPane grid;
@@ -186,12 +187,10 @@ public class Pane {
             throw new NullPointerException("Skriv ett datum");
         }
         String getPlats = ((RadioButton) placeButtonGroup.getSelectedToggle()).getText();
-        if(getPlats.equals("Annat")) {
-            if(!place.getText().trim().isEmpty()) {
+        if(getPlats.equals("Annat") && !place.getText().trim().isEmpty()) {
                 result[4] = place.getText();
-            } else {
-                result[4] = getPlats;
-            }
+        }else {
+            result[4] = getPlats;
         }
         if(!belopp.getText().trim().isEmpty()) {
             result[5] = belopp.getText();

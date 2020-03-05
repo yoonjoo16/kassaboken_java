@@ -20,8 +20,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class SheetParser {
@@ -31,35 +34,16 @@ public class SheetParser {
     private static String yearlySheet;
     private static String month;
     private static String user;
-    private static String date;
+    private static Date date;
+    private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyMMdd");
+    private static SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
     private static String place;
     private static String belopp;
     private static String[] resultFromView;
     private static Sheets sheets;
-    private static final List SCOPES = Arrays.asList(SheetsScopes.SPREADSHEETS);
+    private static final List<String> SCOPES = Arrays.asList(SheetsScopes.SPREADSHEETS);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
-    public static void parse(String[] result) {
-        resultFromView = result;
-        month = result[0];
-        yearlySheet = chooseYear(result[1]);
-        user = result[2];
-        date = result[3];
-        place = result[4];
-        belopp = result[5];
-    }
-
-    private static String chooseYear(String s) {
-        switch (s) {
-            case "2020": return "1QXKm1Owr4q3sVJDp7gMPETepOwVVL7TwGkBPkE215BM";
-            case "2019": return "19gRMtfevqq6RTOnpFNjsa-b-JU6SQ4e0083sYSwf9aI";
-            case "2018": return "1KCW3T41h8bI2bjrc8K5D-izx65w31ujzAnN42HgAc6k";
-            case "2017": return "1zsYahagz95MG5m9SfvAmWWWLDD4pP4xWJC_ckPVQa3w";
-            case "2016": return "1RzPcE6fYP76f3dQwVRtsKS0nKoBshKo-kFp5gWPgt7E";
-            default:
-                throw new IllegalStateException("Unexpected value: " + s);
-        }
-    }
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // Load client secrets.
@@ -88,8 +72,7 @@ public class SheetParser {
     }
 
 
-    protected static void parseFile(String[] result) throws IOException, GeneralSecurityException{
-        sheets = getSheets();
+    protected static void parseFile(String[] result) throws IOException, GeneralSecurityException, ParseException {
         parse(result);
         ValueRange response = sheets.spreadsheets().values()
                 .get(yearlySheet, month)
@@ -98,25 +81,23 @@ public class SheetParser {
         if (values == null || values.isEmpty()) {
             System.out.println("No data found.");
         } else {
-            System.out.println("Datum, Plats, Erik, Yoonjoo, Total");
             for (List row : values) {
                 // Print columns A and E, which correspond to indices 0 and 4.
-                System.out.printf("%s, %s, %s, %s, %s\n", row.get(0), row.get(1), row.get(2), row.get(3), row.get(4));
+                System.out.printf("%s, %s, %s, %s\n", row.get(0), row.get(1), row.get(2), row.get(3));
             }
         }
     }
 
-    protected static void appendFile(String[] result) throws IOException, GeneralSecurityException{
-        sheets = getSheets();
+    protected static void appendFile(String[] result) throws IOException, GeneralSecurityException, ParseException {
         parse(result);
         ValueRange appendBody = new ValueRange();
         if(user.equals("Erik")) {
-            appendBody.setValues(Arrays.asList(Arrays.asList("this","is","from","the","code")));
-          //  appendBody.setValues(Arrays.asList(Arrays.asList(date,place,belopp,"0","")));
-        } else {
-            appendBody.setValues(Arrays.asList(Arrays.asList(date,place,"0",belopp,"")));
-        }
+            //appendBody.setValues(Arrays.asList(Arrays.asList("this","is","from","the","code")));
+            appendBody.setValues(Arrays.asList(Arrays.asList(sdf2.format(date),place,belopp,"0","")));
 
+        } else {
+            appendBody.setValues(Arrays.asList(Arrays.asList(sdf2.format(date),place,"0",belopp,"")));
+        }
         AppendValuesResponse appendResult = sheets.spreadsheets().values()
                 .append(yearlySheet, month,appendBody)
                 .setValueInputOption("USER_ENTERED")
@@ -124,6 +105,30 @@ public class SheetParser {
                 .setIncludeValuesInResponse(true)
                 .execute();
     }
+
+    public static void parse(String[] result) throws IOException, GeneralSecurityException, ParseException {
+        sheets = getSheets();
+        resultFromView = result;
+        month = result[0];
+        yearlySheet = chooseYear(result[1]);
+        user = result[2];
+        date = sdf1.parse(result[3]);
+        place = result[4];
+        belopp = result[5];
+    }
+
+    private static String chooseYear(String s) {
+        switch (s) {
+            case "2020": return "1QXKm1Owr4q3sVJDp7gMPETepOwVVL7TwGkBPkE215BM";
+            case "2019": return "19gRMtfevqq6RTOnpFNjsa-b-JU6SQ4e0083sYSwf9aI";
+            case "2018": return "1KCW3T41h8bI2bjrc8K5D-izx65w31ujzAnN42HgAc6k";
+            case "2017": return "1zsYahagz95MG5m9SfvAmWWWLDD4pP4xWJC_ckPVQa3w";
+            case "2016": return "1RzPcE6fYP76f3dQwVRtsKS0nKoBshKo-kFp5gWPgt7E";
+            default:
+                throw new IllegalStateException("Unexpected value: " + s);
+        }
+    }
+
 
 
 }
