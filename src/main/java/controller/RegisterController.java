@@ -1,8 +1,11 @@
 package controller;
 
+import com.google.api.services.sheets.v4.Sheets;
 import view.Pane;
 import view.RegisterView;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,7 +16,8 @@ public class RegisterController {
     private String month, year, user, place, belopp,s;
     private Date date;
 
-    public void getResultFromView(String[] result) throws ParseException {
+
+    public void getResultFromView(String[] result) throws ParseException, IOException, GeneralSecurityException {
         month = result[0];
         year = result[1];
         user = result[2];
@@ -22,6 +26,8 @@ public class RegisterController {
         belopp = result[5];
         s = "; ";
         System.out.println(month + s + year +s + user + s + sdf.format(date) + s + place + s + belopp);
+        SheetParser.parseFile(result);
+        SheetParser.appendFile(result);
     }
 
 }

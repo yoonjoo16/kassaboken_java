@@ -152,7 +152,11 @@ public class Pane {
         regButton.setOnAction(event -> {
             try {
                 regController.getResultFromView(getResult());
-            } catch (ParseException e) {
+            } catch (NullPointerException | ParseException e) {
+                System.out.println(e.toString());
+            } catch (GeneralSecurityException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         });
@@ -165,7 +169,7 @@ public class Pane {
         grid.addRow(0, new Label("MÂnad: "), selectMonth, new Label("≈r: "), selectYear);
         grid.addRow(1, new Label("Vem har betalat? "), erik, yoonjoo);
         grid.addRow(2, new Label("Datum (≈≈MMDD)"), date);
-        grid.addRow(3, new Label("Plats"), lidl, ica, systemet);
+        grid.addRow(3, lidl, ica, systemet);
         grid.addRow(4, pizza, pub,annat, place);
         grid.addRow(5, new Label("Belopp"), belopp);
         grid.addRow(8,regButton);
@@ -173,19 +177,27 @@ public class Pane {
 
     private String[] getResult() {
         String[] result = new String[6];
-        result[0] = selectMonth.getValue().toString();
+        result[0] = selectMonth.getValue().toString().substring(0,3);
         result[1] = selectYear.getValue().toString();
         result[2] = ((RadioButton) userButtonGroup.getSelectedToggle()).getText();
         if(!date.getText().trim().isEmpty()) {
             result[3] = date.getText();
+        }else {
+            throw new NullPointerException("Skriv ett datum");
         }
-        result[4] = ((RadioButton) placeButtonGroup.getSelectedToggle()).getText();
-        if(result[4].equals("annat")) {
+        String getPlats = ((RadioButton) placeButtonGroup.getSelectedToggle()).getText();
+        if(getPlats.equals("Annat")) {
             if(!place.getText().trim().isEmpty()) {
                 result[4] = place.getText();
-            };
+            } else {
+                result[4] = getPlats;
+            }
         }
-        result[5] = belopp.getText();
+        if(!belopp.getText().trim().isEmpty()) {
+            result[5] = belopp.getText();
+        }else {
+            throw new NullPointerException("Skriv r‰tt belopp!");
+        }
         return result;
     }
 }
