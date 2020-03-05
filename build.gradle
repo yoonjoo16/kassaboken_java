@@ -1,17 +1,35 @@
-apply plugin: 'java'
-apply plugin: 'application'
+plugins {
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+}
 
-mainClassName = 'SheetsQuickstart'
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
 version = '1.0'
 
 repositories {
     mavenCentral()
 }
 
+
+javafx {
+    version = "11"
+    modules = [ 'javafx.controls' ]
+}
+
 dependencies {
     compile 'com.google.api-client:google-api-client:1.30.4'
     compile 'com.google.oauth-client:google-oauth-client-jetty:1.30.4'
     compile 'com.google.apis:google-api-services-sheets:v4-rev581-1.25.0'
+}
+
+test {
+    // Log passed/failed tests in the console (see also build/reports/tests):
+    testLogging.events 'passed', 'failed'
+
+    // This causes tests to always be re-run.
+    dependsOn 'cleanTest'
 }
