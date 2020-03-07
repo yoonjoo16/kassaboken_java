@@ -5,11 +5,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 public abstract class Pane {
-    protected GridPane grid;    //
-    protected ComboBox selectYear; //
-    protected ToggleGroup userButtonGroup; //
-    protected RadioButton erik, yoonjoo; //
-    protected TextField date, belopp; //
+    protected GridPane grid;
+    protected ComboBox selectYear;
+    protected ToggleGroup userButtonGroup;
+    protected RadioButton erik, yoonjoo;
+    protected TextField date, belopp;
 
     protected void makePane() {
         grid = new GridPane();
@@ -54,7 +54,9 @@ public abstract class Pane {
         yoonjoo.setToggleGroup(userButtonGroup);
     }
 
-   protected abstract void makeGrid() ;
+   protected abstract void makeGrid();
+
+    protected abstract String[] getResult();
 
 
 }

@@ -13,7 +13,7 @@ import java.text.ParseException;
 public class RegisterPane extends Pane {
     private ComboBox selectMonth;
     private ToggleGroup placeButtonGroup;
-    private RadioButton ica, lidl, systemet, pizza, pub, annat;
+    private RadioButton ica, lidl, systemet, lokchan, pizza, pub, annat;
     private TextField place;
     private Button regButton;
     private Controller controller;
@@ -28,8 +28,6 @@ public class RegisterPane extends Pane {
         makeRegisterButton();
         makeGrid();
     }
-
-
 
     private void makeTextForPlace() {
         place = new TextField();
@@ -63,6 +61,7 @@ public class RegisterPane extends Pane {
         lidl = new RadioButton("Lidl");
         ica = new RadioButton("ICA");
         systemet = new RadioButton("Systemet");
+        lokchan = new RadioButton("Lokchan");
         pizza = new RadioButton("Pizza");
         pub = new RadioButton("Pub");
         annat = new RadioButton("Annat");
@@ -70,6 +69,7 @@ public class RegisterPane extends Pane {
         lidl.setToggleGroup(placeButtonGroup);
         ica.setToggleGroup(placeButtonGroup);
         systemet.setToggleGroup(placeButtonGroup);
+        lokchan.setToggleGroup(placeButtonGroup);
         pizza.setToggleGroup(placeButtonGroup);
         pub.setToggleGroup(placeButtonGroup);
         annat.setToggleGroup(placeButtonGroup);
@@ -88,6 +88,12 @@ public class RegisterPane extends Pane {
 
         systemet.setOnAction(event -> {
             if (systemet.isSelected()) {
+                place.setDisable(true);
+            }
+        });
+
+        lokchan.setOnAction(event -> {
+            if (lokchan.isSelected()) {
                 place.setDisable(true);
             }
         });
@@ -135,13 +141,12 @@ public class RegisterPane extends Pane {
         grid.addRow(0, new Label("Månad: "), selectMonth, new Label("År: "), selectYear);
         grid.addRow(1, new Label("Vem har betalat? "), erik, yoonjoo);
         grid.addRow(2, new Label("Datum (YYMMDD)"), date);
-        grid.addRow(3, lidl, ica, systemet);
+        grid.addRow(3, lidl, ica, systemet,lokchan);
         grid.addRow(4, pizza, pub,annat, place);
-        grid.addRow(5, new Label("Belopp"), belopp);
-        grid.addRow(8,regButton);
+        grid.addRow(5, new Label("Belopp"), belopp, regButton);
     }
 
-    private String[] getResult() {
+    protected String[] getResult() {
         String[] result = new String[6];
         result[0] = selectMonth.getValue().toString().substring(0,3);
         result[1] = selectYear.getValue().toString();
