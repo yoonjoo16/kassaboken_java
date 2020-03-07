@@ -23,7 +23,6 @@ import java.security.GeneralSecurityException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -73,7 +72,7 @@ public class SheetParser {
 
 
     protected static void parseFile(String[] result) throws IOException, GeneralSecurityException, ParseException {
-        parse(result);
+        parseForReg(result);
         ValueRange response = sheets.spreadsheets().values()
                 .get(yearlySheet, month)
                 .execute();
@@ -89,7 +88,7 @@ public class SheetParser {
     }
 
     protected static void appendFile(String[] result) throws IOException, GeneralSecurityException, ParseException {
-        parse(result);
+        parseForReg(result);
         ValueRange appendBody = new ValueRange();
         if(user.equals("Erik")) {
             //appendBody.setValues(Arrays.asList(Arrays.asList("this","is","from","the","code")));
@@ -106,7 +105,7 @@ public class SheetParser {
                 .execute();
     }
 
-    public static void parse(String[] result) throws IOException, GeneralSecurityException, ParseException {
+    private static void parseForReg(String[] result) throws IOException, GeneralSecurityException, ParseException {
         sheets = getSheets();
         resultFromView = result;
         month = result[0];

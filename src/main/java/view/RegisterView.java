@@ -17,12 +17,6 @@ public class RegisterView extends Application {
 
     @Override
     public void start(Stage stage) {
-        stage.setTitle("Registrering");
-        Scene scene = new Scene(new Group(), 550, 300);
-        grid = new Pane().getGrid();
-        Group root = (Group)scene.getRoot();
-        root.getChildren().add(grid);
-        stage.setScene(scene);
-        stage.show();
+
     }
 }
