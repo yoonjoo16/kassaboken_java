@@ -1,19 +1,22 @@
 package view;
 
+import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 public abstract class Pane {
     protected GridPane grid;
-    protected ComboBox selectYear;
+    protected ComboBox selectMonth, selectYear;
     protected ToggleGroup userButtonGroup;
     protected RadioButton erik, yoonjoo;
     protected TextField date, belopp;
+    protected Controller controller;
 
     protected void makePane() {
         grid = new GridPane();
         makeTextForDateAndBelopp();
+        makeMonthList();
         makeYearList();
         makeButtonsSelectingUser();
     }
@@ -27,6 +30,25 @@ public abstract class Pane {
             int maxCharacters = 6;
             if(date.getText().length() > maxCharacters) event.consume();
         });
+    }
+
+    private void makeMonthList(){
+        selectMonth = new ComboBox();
+        selectMonth.getItems().addAll(
+                "januari",
+                "februari",
+                "mars",
+                "april",
+                "maj",
+                "juni",
+                "juli",
+                "augusti",
+                "september",
+                "oktober",
+                "november",
+                "december"
+        );
+        selectMonth.setValue("mars");
     }
 
     private void makeYearList() {
@@ -56,7 +78,6 @@ public abstract class Pane {
 
    protected abstract void makeGrid();
 
-    protected abstract String[] getResult();
 
 
 }

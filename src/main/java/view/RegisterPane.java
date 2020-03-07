@@ -4,26 +4,24 @@ import controller.Controller;
 import controller.RegController;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.text.ParseException;
 
 public class RegisterPane extends Pane {
-    private ComboBox selectMonth;
+
     private ToggleGroup placeButtonGroup;
     private RadioButton ica, lidl, systemet, lokchan, pizza, pub, annat;
     private TextField place;
     private Button regButton;
-    private Controller controller;
+
     private RegController regController;
 
     public RegisterPane() {
-        controller = new RegController();
+        super.controller = new RegController();
         makePane();
         makeTextForPlace();
-        makeMonthList();
         makeButtonsSelectingPlace();
         makeRegisterButton();
         makeGrid();
@@ -34,26 +32,6 @@ public class RegisterPane extends Pane {
         place.setMinWidth(15);
         place.setDisable(true);
     }
-
-    private void makeMonthList(){
-        selectMonth = new ComboBox();
-        selectMonth.getItems().addAll(
-                "januari",
-                "februari",
-                "mars",
-                "april",
-                "maj",
-                "juni",
-                "juli",
-                "augusti",
-                "september",
-                "oktober",
-                "november",
-                "december"
-        );
-        selectMonth.setValue("mars");
-    }
-
 
     private void makeButtonsSelectingPlace() {
         placeButtonGroup = new ToggleGroup();
@@ -123,7 +101,8 @@ public class RegisterPane extends Pane {
         regButton = new Button("Register");
         regButton.setOnAction(event -> {
             try {
-                regController.appendLine(getResult());
+                controller.appendLine(getValuesFromView());
+
             } catch (NullPointerException | ParseException e) {
                 System.out.println(e.toString());
             } catch (GeneralSecurityException e) {
@@ -137,7 +116,7 @@ public class RegisterPane extends Pane {
     protected void makeGrid() {
         grid.setVgap(4);
         grid.setHgap(10);
-        grid.setPadding(new Insets(5, 5, 5, 5));
+        grid.setPadding(new Insets(10, 10, 10, 10));
         grid.addRow(0, new Label("Månad: "), selectMonth, new Label("År: "), selectYear);
         grid.addRow(1, new Label("Vem har betalat? "), erik, yoonjoo);
         grid.addRow(2, new Label("Datum (YYMMDD)"), date);
@@ -146,7 +125,7 @@ public class RegisterPane extends Pane {
         grid.addRow(5, new Label("Belopp"), belopp, regButton);
     }
 
-    protected String[] getResult() {
+    private String[] getValuesFromView() {
         String[] result = new String[6];
         result[0] = selectMonth.getValue().toString().substring(0,3);
         result[1] = selectYear.getValue().toString();
@@ -167,6 +146,7 @@ public class RegisterPane extends Pane {
         }else {
             throw new NullPointerException("Skriv rätt belopp!");
         }
+        System.out.println(result[0] + "; " + result[1] + "; " + result[2] + "; " + result[3] + "; " + result[4]  + "; " + result[5]);
         return result;
     }
 }
