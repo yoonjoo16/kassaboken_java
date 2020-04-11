@@ -10,9 +10,10 @@ import javafx.scene.text.Text;
 public class CalculatorPane extends Pane{
     private Button calButton;
     private Button swishButton;
+    private CalController controller;
 
     public CalculatorPane() {
-        super.controller = new CalController();
+        controller = new CalController();
         makePane();
         makeButtons();
         makeGrid();

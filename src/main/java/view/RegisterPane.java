@@ -15,11 +15,10 @@ public class RegisterPane extends Pane {
     private RadioButton ica, lidl, systemet, lokchan, pizza, pub, annat;
     private TextField place;
     private Button regButton;
-
-    private RegController regController;
+    private RegController controller;
 
     public RegisterPane() {
-        super.controller = new RegController();
+        controller = new RegController();
         makePane();
         makeTextForPlace();
         makeButtonsSelectingPlace();
@@ -101,7 +100,7 @@ public class RegisterPane extends Pane {
         regButton = new Button("Register");
         regButton.setOnAction(event -> {
             try {
-                controller.appendLine(getValuesFromView());
+                controller.appendFile(getValuesFromView());
 
             } catch (NullPointerException | ParseException e) {
                 System.out.println(e.toString());

@@ -11,7 +11,6 @@ public abstract class Pane {
     protected ToggleGroup userButtonGroup;
     protected RadioButton erik, yoonjoo;
     protected TextField date, belopp;
-    protected Controller controller;
 
     protected void makePane() {
         grid = new GridPane();
@@ -75,6 +74,8 @@ public abstract class Pane {
         yoonjoo = new RadioButton("Yoonjoo");
         yoonjoo.setToggleGroup(userButtonGroup);
     }
+
+
 
    protected abstract void makeGrid();
 
