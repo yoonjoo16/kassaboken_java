@@ -20,8 +20,8 @@ public class TabPaneView extends Application {
         TabPane tabPane = new TabPane();
 
         Tab tab1 = new Tab("Registrering",regGrid);
-        Tab tab2 = new Tab("Räkna ut din skuld",calGrid);
-        Tab tab3 = new Tab("Senaste inköp");
+        Tab tab2 = new Tab("RÃ¤kna ut din skuld",calGrid);
+        Tab tab3 = new Tab("Senaste inkÃ¶p");
 
         tabPane.getTabs().add(tab1);
         tabPane.getTabs().add(tab2);

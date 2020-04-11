@@ -34,12 +34,12 @@ public class CalculatorPane extends Pane{
         grid.setVgap(4);
         grid.setHgap(10);
         grid.setPadding(new Insets(10, 10, 10, 10));
-        Text rakna = new Text("R‰kna ut din skuld!");
+        Text rakna = new Text("R√§kna ut din skuld!");
         Text swish = new Text("Betala tillbaka!");
         rakna.setStyle("-fx-font-weight: bold");
         swish.setStyle("-fx-font-weight: bold");
         grid.addRow(0, rakna);
-        grid.addRow(1, new Label("MÂnad: "),selectMonth, new Label("≈r: "), selectYear);
+        grid.addRow(1, new Label("M√•nad: "),selectMonth, new Label("√Ör: "), selectYear);
         grid.addRow(2, calButton);
         grid.addRow(3, swish);
         grid.addRow(4, new Label("Vem har swishat? "), erik, yoonjoo);
@@ -68,7 +68,7 @@ public class CalculatorPane extends Pane{
         if(!belopp.getText().trim().isEmpty()) {
             result[5] = belopp.getText();
         }else {
-            throw new NullPointerException("Skriv r‰tt belopp!");
+            throw new NullPointerException("Skriv r√§tt belopp!");
         }
         return result;
     }

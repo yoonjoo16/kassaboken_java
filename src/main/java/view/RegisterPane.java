@@ -117,7 +117,7 @@ public class RegisterPane extends Pane {
         grid.setVgap(4);
         grid.setHgap(10);
         grid.setPadding(new Insets(10, 10, 10, 10));
-        grid.addRow(0, new Label("MÂnad: "), selectMonth, new Label("≈r: "), selectYear);
+        grid.addRow(0, new Label("M√•nad: "), selectMonth, new Label("√Ör: "), selectYear);
         grid.addRow(1, new Label("Vem har betalat? "), erik, yoonjoo);
         grid.addRow(2, new Label("Datum (YYMMDD)"), date);
         grid.addRow(3, lidl, ica, systemet,lokchan);
@@ -144,7 +144,7 @@ public class RegisterPane extends Pane {
         if(!belopp.getText().trim().isEmpty()) {
             result[5] = belopp.getText();
         }else {
-            throw new NullPointerException("Skriv r‰tt belopp!");
+            throw new NullPointerException("Skriv r√§tt belopp!");
         }
         System.out.println(result[0] + "; " + result[1] + "; " + result[2] + "; " + result[3] + "; " + result[4]  + "; " + result[5]);
         return result;
