@@ -27,7 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 public abstract class Controller {
-        private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
+        private static final String APPLICATION_NAME = "Kassaboken";
         private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
         private static final String TOKENS_DIRECTORY_PATH = "tokens";
         protected static String yearlySheet;
@@ -41,6 +41,7 @@ public abstract class Controller {
         protected static Sheets sheets;
         private static final List<String> SCOPES = Arrays.asList(SheetsScopes.SPREADSHEETS);
         private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
+        private static URLinfo info = new URLinfo();
 
 
         private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
@@ -71,11 +72,11 @@ public abstract class Controller {
 
         protected static String chooseYear(String s) {
             switch (s) {
-                case "2020": return "1QXKm1Owr4q3sVJDp7gMPETepOwVVL7TwGkBPkE215BM";
-                case "2019": return "19gRMtfevqq6RTOnpFNjsa-b-JU6SQ4e0083sYSwf9aI";
-                case "2018": return "1KCW3T41h8bI2bjrc8K5D-izx65w31ujzAnN42HgAc6k";
-                case "2017": return "1zsYahagz95MG5m9SfvAmWWWLDD4pP4xWJC_ckPVQa3w";
-                case "2016": return "1RzPcE6fYP76f3dQwVRtsKS0nKoBshKo-kFp5gWPgt7E";
+                case "2020": return info.getYear2020();
+                case "2019": return info.getYear2019();
+                case "2018": return info.getYear2018();
+                case "2017": return info.getYear2017();
+                case "2016": return info.getYear2016();
                 default:
                     throw new IllegalStateException("Unexpected value: " + s);
             }

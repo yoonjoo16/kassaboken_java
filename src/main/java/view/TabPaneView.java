@@ -15,17 +15,15 @@ public class TabPaneView extends Application {
     public void start(Stage primaryStage) {
         regGrid = new RegisterPane().getGrid();
         calGrid = new CalculatorPane().getGrid();
-      //  hisGrid = new HistoryPane().getGrid();
 
         TabPane tabPane = new TabPane();
 
         Tab tab1 = new Tab("Registrering",regGrid);
         Tab tab2 = new Tab("Räkna ut din skuld",calGrid);
-        Tab tab3 = new Tab("Senaste inköp");
+
 
         tabPane.getTabs().add(tab1);
         tabPane.getTabs().add(tab2);
-        tabPane.getTabs().add(tab3);
 
         VBox vBox = new VBox(tabPane);
         Scene scene = new Scene(vBox);

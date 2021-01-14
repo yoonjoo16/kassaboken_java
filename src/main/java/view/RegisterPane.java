@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class RegisterPane extends Pane {
 
@@ -16,6 +17,7 @@ public class RegisterPane extends Pane {
     private TextField place;
     private Button regButton;
     private RegController controller;
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
 
     public RegisterPane() {
         controller = new RegController();
@@ -100,7 +102,13 @@ public class RegisterPane extends Pane {
         regButton = new Button("Register");
         regButton.setOnAction(event -> {
             try {
-                controller.appendFile(getValuesFromView());
+                String[] result = getValuesFromView();
+                controller.appendFile(result);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText(null);
+                alert.setContentText(sdf.parse(result[3]).toString() + ", " + result[2] + " spent " + result[5]  + "kr at " + result[4] +
+                        "\nhas been registered.");
+                alert.showAndWait();
 
             } catch (NullPointerException | ParseException e) {
                 System.out.println(e.toString());
